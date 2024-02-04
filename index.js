@@ -29,3 +29,18 @@
 //   console.log("server is runing on 5000");
 // })
 
+const express = require("express")
+const UserData = require("./Data")
+const app = express();
+app.get("/" , (req, res)=>{
+    res.send("hello this is aman")
+})
+
+app.get('/api/data', (request, response) => {
+    response.json(UserData)
+  })
+  
+const PORT= 4000;
+app.listen(PORT,()=>{
+    console.log(`server is runnign on ${PORT}`);
+})
