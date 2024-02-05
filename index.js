@@ -29,41 +29,54 @@
 //   console.log("server is runing on 5000");
 // })
 
-const express = require("express")
-const UserData = require("./Data")
-const fs = require("fs")
+const express = require("express");
 const app = express();
 
-//this is home page
+let data = [
+    { id: 1, name: 'aman' , num: 6268518514 },
+    { id: 2, name: 'sumit' , num: 8085640735 },
+    { id: 3, name: 'piyush' , num: 7247220015},
+  ];
+
+//simple Home page 
 app.get("/" , (req, res)=>{
-    res.send("hello this is aman")
+    res.send("hello world")
+})
+
+//get all data
+app.get("/items" , (req, res)=>{
+    res.json(data)
+})
+
+//get data by id
+app.get("/items/:id" , (req, res)=>{
+    const itemId = parseInt(req.params.id);
+    const item = data.find((item)=> item.id === itemId)
+    if (item) {
+        res.send(item)
+    } else {
+          console.log("error founs");
+    }
 })
 
 
-//thhi is data page
-app.get('/api/data', (request, response) => {
-    response.json(UserData)
-  })
+//post data 
+app.post('/items', (req, res) => {
+    const newItem = req.body;
+    newItem.id = data.length + 1;
+    data.push(newItem);
+    res.status(201).json(newItem);
+  });
 
+  
+//delete by id
+app.delete('/items/:id', (req, res) => {
+    const itemId = parseInt(req.params.id);
+    data = data.filter((item) => item.id !== itemId);
+    res.json({ message: 'Item deleted successfully' });
+  });
 
-//get user by id
-app.get("/api/users/:id" , (req, res) => {
-    const id = Number(req.params.id)
-    const user = UserData.find((user) => user.id === id);
-    return res.json(user)
-})
-
-app.use(express.urlencoded({extended : false}));
-
-//post user
-app.post("/api/users" , (req, res)=>{
-    const body = req.body;
-    Data.push({...body , id: UserData.length + 1});
-    fs.writeFile("./Data.js" , JSON.stringify(UserData) , (err , data)=>{
-        return res.json({status : "success" , id:UserData.length });
-    });
-});
-const PORT= 4000;
-app.listen(PORT,()=>{
-    console.log(`server is runnign on ${PORT}`);
-})
+const PORT = 3000;
+ app.listen(PORT, ()=>{
+    console.log(`server is running on port ${PORT}`);
+ })
