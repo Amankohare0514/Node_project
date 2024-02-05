@@ -102,4 +102,3 @@ const UserData = [
       ]
 
 module.exports = {UserData}
-export default UserData

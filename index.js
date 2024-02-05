@@ -31,15 +31,38 @@
 
 const express = require("express")
 const UserData = require("./Data")
+const fs = require("fs")
 const app = express();
+
+//this is home page
 app.get("/" , (req, res)=>{
     res.send("hello this is aman")
 })
 
+
+//thhi is data page
 app.get('/api/data', (request, response) => {
     response.json(UserData)
   })
-  
+
+
+//get user by id
+app.get("/api/users/:id" , (req, res) => {
+    const id = Number(req.params.id)
+    const user = UserData.find((user) => user.id === id);
+    return res.json(user)
+})
+
+app.use(express.urlencoded({extended : false}));
+
+//post user
+app.post("/api/users" , (req, res)=>{
+    const body = req.body;
+    Data.push({...body , id: UserData.length + 1});
+    fs.writeFile("./Data.js" , JSON.stringify(UserData) , (err , data)=>{
+        return res.json({status : "success" , id:UserData.length });
+    });
+});
 const PORT= 4000;
 app.listen(PORT,()=>{
     console.log(`server is runnign on ${PORT}`);
