@@ -4,17 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node user.js",
+    "dev": "nodemon user.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "dotenv": "^16.3.2",
     "express": "^4.18.2",
     "mongodb": "^6.3.0",
-    "mongoose": "^8.1.0"
+    "mongoose": "^8.1.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.3"
