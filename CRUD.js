@@ -1,3 +1,4 @@
+//Heere all Crud operations
 const express = require("express")
 const mongoose = require("mongoose")
 
@@ -54,6 +55,18 @@ app.get("/users/:id" , async (req, res)=>{
     } catch (error) {
         res.status(500).send(error)
     }
+})
+
+app.put("/users/:id" , async(req , res)=>{
+   try {
+    const user = await User.findByIdAndUpdate(req.params.id , req.body , {new: true});
+    if(!user){
+        return res.status(402).status("user not found")
+    }
+    res.send("user updated successffully")
+   } catch (error) {
+    res.status(500).send(error)
+   }
 })
 
 //delete user by id
