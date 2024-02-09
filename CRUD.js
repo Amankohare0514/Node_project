@@ -57,6 +57,7 @@ app.get("/users/:id" , async (req, res)=>{
     }
 })
 
+//update by id
 app.put("/users/:id" , async(req , res)=>{
    try {
     const user = await User.findByIdAndUpdate(req.params.id , req.body , {new: true});

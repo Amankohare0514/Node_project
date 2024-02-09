@@ -1,6 +1,5 @@
 const http = require("http")
 
-PORT = 3000
 
 // const server = http.createServer((req, res) => {
 //     res.writeHead(200, {
@@ -34,10 +33,6 @@ const friends = [
         id: 3,
         name: "aman Einstein",
     },
-    {
-        id: 3,
-        name: "Nikola Tesla",
-    }
 ]
 
 server.on("request", (req, res) => {
@@ -84,7 +79,7 @@ server.on("request", (req, res) => {
         }
 })
 
-
+const PORT = 3000;
 server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
 })
